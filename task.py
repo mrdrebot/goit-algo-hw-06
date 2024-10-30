@@ -16,7 +16,7 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, phone):
-        if len(phone) >= 10 and phone.isdigit():
+        if len(phone) == 10 and phone.isdigit():
             super().__init__(phone)
         else:
             raise ValueError("You have enterd less than 10 digitals!")
@@ -43,61 +43,67 @@ class Record:
             if phone.value == old_p.value:
                 phone.value = new_p.value
 
-    def search_phone(self, phone_number):
+    def find_phone(self, phone_number):
         for phone in self.phones:
             if phone.value == phone_number:
                 return phone
             
         return None
 
-
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
 
 class AddressBook(UserDict):
-    # реалізація класу
-    # def __init__(self, user_record):
-    #     print(user_record)
-    #     self.user_record = user_record
-
     def add_record(self, user_record):
-        #   print(user_record)
-        #   print(user_record.name)
-        #   print(user_record.phones)
-
           self.data[user_record.name.value] = user_record
 
-    def search_contact(self, contact_name):
+    def find(self, contact_name):
         return self.data.get(contact_name)
+    
+    def delete(self, contact_name):
+        self.data.pop(contact_name)
 
     def __str__(self):
-        # return str(self.data)
-        return f"Contacts:\n{'\n'.join(self.data.keys())}"
+        return f"Contacts:\n{"\n".join(str(user_data) for user_data in self.data.values())}"
 
-book = AddressBook()
+
+#
+# Checking the operation of the program
+#
+# book = AddressBook()
+# print("---Add users records---")
+# maks_record = Record("Maks")
+# print(maks_record)
+# miha_record = Record("Miha")
+# print(miha_record)
+# alex_record = Record("Alex")
+# print(alex_record)
+# print("---Add users phones---")
+# maks_record.add_phone("1234567890")
+# maks_record.add_phone("5555555555")
+# maks_record.add_phone("5555555556")
+# print(maks_record)
+# miha_record.add_phone("5555555557")
+# print(miha_record)
+# alex_record.add_phone("5555555558")
+# print(alex_record)
+# print("---Delete user phone number---")
+# maks_record.remove_phone("5555555556")
+# print(maks_record)
+# print("---Edit user phone number---")
+# miha_record.edit_phone("5555555557", "7777777777")
+# print(miha_record)
+# print("---Find user phone number---")
+# print(alex_record.find_phone("5555555558"))
+# print(maks_record.find_phone("7777777779"))
+# print("---Add contacts in the contacts book---")
+# book.add_record(maks_record)
+# book.add_record(miha_record)
+# book.add_record(alex_record)
 # print(book)
-maks_record = Record("Maks")
-miha_record = Record("Miha")
-alex_record = Record("Alex")
-# maks_record = Record("")
-# print(maks_record)
-maks_record.add_phone("1234567890")
-maks_record.add_phone("5555555555")
-maks_record.add_phone("5555555556")
-miha_record.add_phone("5555555556")
-alex_record.add_phone("5555555556")
-# print(maks_record)
-maks_record.remove_phone("5555555556")
-# print(maks_record)
-maks_record.edit_phone("5555555555", "7777777777")
-# print(maks_record)
-# print(maks_record.search_phone("7777777777"))
-print(maks_record.search_phone("7777777779"))
-
-book.add_record(maks_record)
-book.add_record(miha_record)
-book.add_record(alex_record)
-print(book)
-
-print(book.search_contact("Maks"))
-print(book.search_contact("Maks1"))
+# print("---Find contacts in the contacts book---")
+# print(book.find("Maks"))
+# print(book.find("Maks1"))
+# print("---Delete contact in the contacts book---")
+# book.delete("Miha")
+# print(book)
