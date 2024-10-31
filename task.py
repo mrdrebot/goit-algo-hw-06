@@ -39,6 +39,9 @@ class Record:
         old_p = Phone(old_phone)
         new_p = Phone(new_phone)
 
+        if not any(old_phone == phone.value for phone in self.phones):
+            raise ValueError("The entered number wasn`t found!")
+
         for phone in self.phones:
             if phone.value == old_p.value:
                 phone.value = new_p.value
@@ -92,6 +95,7 @@ class AddressBook(UserDict):
 # print(maks_record)
 # print("---Edit user phone number---")
 # miha_record.edit_phone("5555555557", "7777777777")
+# # miha_record.edit_phone("5555555550", "0777777777") # The phone number is missing in contact
 # print(miha_record)
 # print("---Find user phone number---")
 # print(alex_record.find_phone("5555555558"))
